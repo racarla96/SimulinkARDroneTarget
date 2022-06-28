@@ -145,9 +145,62 @@ Battery_def.SourceFiles  = {'BatteryMeasure.c','BatteryMeasure_Wrapper.c'};
 Battery_def.SrcPaths = {'.'};
 legacy_code('sfcn_tlc_generate', Battery_def);
 
+%% UDP Blocks
+
+% % % UDP SEND
+% % UDP_Send_def = legacy_code('initialize');
+% % UDP_Send_def.SFunctionName = 'UDP_Send_Sfcn';
+% % UDP_Send_def.IncPaths = {''};
+% % UDP_Send_def.SourceFiles                  = {'udp_send.c'};
+% % UDP_Send_def.HeaderFiles                  = {'udp_send.h'};
+% % UDP_Send_def.OutputFcnSpec                = 'int16 y1 = udp_send(uint8 u1[], uint16 u2, uint8 u3[], uint16 u4)';  
+% % UDP_Send_def.TerminateFcnSpec             = 'void udp_send_close()';
+% % UDP_Send_def.Options.useTlcWithAccel      = false;
+% % UDP_Send_def.Options.language =  'C';
+% % UDP_Send_def.SampleTime    = 'parameterized';
+% % 
+% % % Generate S-function source file
+% % legacy_code('sfcn_cmex_generate', UDP_Send_def);
+% % 
+% % % Generate for simulation only - the S-function does nothing in normal mode
+% % legacy_code('compile', UDP_Send_def);
+% % 
+% % % When generating TLC, we want to include additional source files which are
+% % % device driver / HW specific
+% % UDP_Send_def.HeaderFiles  = {'udp_send.h','udp.h'};
+% % UDP_Send_def.SourceFiles  = {'udp_send.c'};
+% % UDP_Send_def.SrcPaths = {'.'};
+% % legacy_code('sfcn_tlc_generate', UDP_Send_def);
+
+% UDP RECV
+UDP_Recv_def = legacy_code('initialize');
+UDP_Recv_def.SFunctionName = 'UDP_Recv_Sfcn';
+UDP_Recv_def.IncPaths = {''};
+UDP_Recv_def.SourceFiles                  = {'udp_recv.c'};
+UDP_Recv_def.HeaderFiles                  = {'udp_recv.h'};
+UDP_Recv_def.OutputFcnSpec                = 'int32 y1 = udp_recv(int32 u1, double u2, uint8 y2[32])';  
+UDP_Recv_def.TerminateFcnSpec             = 'void udp_recv_close()';
+UDP_Recv_def.Options.useTlcWithAccel      = false;
+UDP_Recv_def.Options.language =  'C';
+UDP_Recv_def.SampleTime    = 'parameterized';
+
+% Generate S-function source file
+legacy_code('sfcn_cmex_generate', UDP_Recv_def);
+
+% Generate for simulation only - the S-function does nothing in normal mode
+legacy_code('compile', UDP_Recv_def);
+
+% When generating TLC, we want to include additional source files which are
+% device driver / HW specific
+UDP_Recv_def.HeaderFiles  = {'udp_recv.h','udp.h'};
+UDP_Recv_def.SourceFiles  = {'udp_recv.c'};
+UDP_Recv_def.SrcPaths = {'.'};
+legacy_code('sfcn_tlc_generate', UDP_Recv_def);
+
 %% Generate the rtwmakecfg file for all s functions
 
-legacy_code('rtwmakecfg_generate', [print_def; act_init_def;IMU_Block_def;LED_Block_def;Motor_def;Version_Check_def;Battery_def]);
+% legacy_code('rtwmakecfg_generate', [print_def; act_init_def; IMU_Block_def; LED_Block_def; Motor_def; Version_Check_def; Battery_def; UDP_Send_def; UDP_Recv_def;]);
+legacy_code('rtwmakecfg_generate', [print_def; act_init_def; IMU_Block_def; LED_Block_def; Motor_def; Version_Check_def; Battery_def; UDP_Recv_def;]);
 
 %% clear the loaded bus object
 
