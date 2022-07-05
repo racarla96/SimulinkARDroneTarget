@@ -19,3 +19,5 @@ The provided Simulink blocks allow you to read all the sensors and both cameras 
 3. The folder structure for the files is such that
   1. Pre made Simulink models are inside the AR_Drone_Models folder
   2. Library blocks, C source code and custom scripts are in the AR_Drone_Target folder 
+  
+  Functionality: Added support to receive UDP packets sent from Matlab to the ARDrone (Branch: R2016a)
